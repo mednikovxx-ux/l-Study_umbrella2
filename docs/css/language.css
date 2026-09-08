@@ -1,0 +1,473 @@
+/* language.css */
+/* прижимаем картинку вниз серого блока */
+.page-language .hero__image-wrap{
+  align-items: flex-end;     /* было flex-start в main.css */
+}
+
+/* делаем картинку крупнее (перебиваем max-width: 320px из main.css) */
+.page-language .hero__image{
+  max-width: 560px;          /* подгони: 520–650 */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;          /* если картинка вырезана без фона — так чаще выглядит лучше */
+}
+
+
+/* ================================
+   LANGUAGE PAGE – HERO ARROW
+   ================================ */
+/* жёлтая стрелка — управляемая */
+.page-language .hero__arrow {
+  position: absolute;
+
+  width: 120px;
+  height: auto;
+
+  /* ✅ СБРАСЫВАЕМ то, что может мешать */
+  right: auto;
+  bottom: auto;
+
+  /* ✅ ДВИГАЕШЬ ТОЛЬКО ЭТИ ДВЕ */
+  left: 160px;
+  top: 220px;
+  transform: rotate(-20deg);
+
+
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ================================
+   HERO CTA DECOR (FIGMA STYLE)
+   ================================ */
+
+/* контейнер кнопки + декора */
+.page-language .hero__cta {
+  position: relative;
+  display: inline-block;
+}
+
+/* декоративная картинка */
+.page-language .hero__cta-decor {
+  position: absolute;
+
+  /* РАЗМЕР */
+  width: 64px;
+  height: auto;
+
+  /* 🔥 ПОЗИЦИЯ — МЕНЯЕШЬ САМА */
+  left: -40px;   /* влево / вправо */
+  top: 65px;    /* вверх / вниз */
+
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* на мобильных убираем декор */
+@media (max-width: 768px) {
+  .page-language .hero__cta-decor {
+    display: none;
+  }
+}
+/* ================================
+   WHY – UMBRELLA DECOR
+   ================================ */
+
+.page-language .why-head{
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* зонтик */
+.page-language .why-head__umbrella{
+  position: absolute;
+
+  width: 86px;
+  height: auto;
+
+  /* 👉 ДВИГАЕШЬ САМА */
+  left: 230px;
+  top: -26px;
+
+  transform: rotate(0deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* мобильная версия — убираем */
+@media (max-width: 768px){
+  .page-language .why-head__umbrella{
+    display: none;
+  }
+}
+/* ================================
+   WHY — TEAPOT DECOR (ONLY THIS)
+   ================================ */
+
+/* делаем контейнер секции опорной точкой */
+.page-language #why .container {
+  position: relative;
+}
+
+/* сам чайник */
+.page-language .why-teapot {
+  position: absolute;
+
+  width: 100px;     /* размер из Figma (143×133) */
+  height: auto;
+
+  /* 🔥 ДВИГАЕШЬ ТОЛЬКО ЭТИ */
+  right: 0px;     /* вправо / влево */
+  bottom: -50px;     /* ниже / выше */
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* на мобилке убираем */
+@media (max-width: 768px) {
+  .page-language .why-teapot {
+    display: none;
+  }
+}
+/* ==================================================
+   OFFERS (#offers) — правки под макет (только language)
+   1) Цвета заголовка
+   2) Опустить "Наша задача..."
+   3) Танцовщица заходит на #why (предыдущую секцию)
+   ================================================== */
+
+/* Поднимаем offers над предыдущей секцией по слою */
+.page-language #offers{
+  position: relative;
+  z-index: 50; /* важно: выше, чем #why */
+}
+
+/* Опорная точка для позиционирования танцовщицы */
+.page-language #offers .container{
+  position: relative;
+}
+
+/* 1) Цвета заголовка как в фигме */
+.page-language #offers .programs-title-main{
+  color: #52B37E; /* зелёный */
+}
+.page-language #offers .programs-title-accent{
+  color: #FFC143; /* оранжевый */
+}
+
+/* 2) Опустить текст "Наша задача..." ниже */
+.page-language #offers .programs-info{
+  margin-top: 26px;   /* увеличь если нужно ещё ниже */
+}
+
+/* 3) Танцовщица: живёт в offers, но залезает вверх на #why */
+.page-language #offers .offers-dancer{
+  position: absolute;
+
+  width: 140px;   /* подгоняй под макет */
+  height: auto;
+
+  /* 🔥 эти 2 значения двигаешь сама */
+  right: 360px;   /* сдвиг по горизонтали */
+  top: -85px;     /* отрицательное значение = заходим на секцию #why */
+
+  z-index: 999;   /* поверх всего */
+  pointer-events: none;
+}
+
+/* На мобильных лучше скрыть */
+@media (max-width: 768px){
+  .page-language #offers .offers-dancer{
+    display: none;
+  }
+}
+/* ================================
+   HUMANITIES PAGE — HERO TUNING (CONTROLLED)
+   ================================ */
+
+/* 1) цвет STUDY UMBRELLA */
+.page-humanities .hero__title-main{
+  color: #A98AB0;
+}
+
+/* 2) цвет кнопки (БОЛЬШЕ НИЧЕГО ЕЁ НЕ ТРОГАЕТ) */
+.page-humanities .hero .btn--primary{
+  background-color: #A98AB0;
+  color: #000;
+  border-color: #000;
+  box-shadow: 0 4px 0 #a08dcb;
+}
+
+/* ================================
+   ГЛАВНОЕ ИЗОБРАЖЕНИЕ (зонт + люди)
+   ты можешь:
+   – уменьшать / увеличивать
+   – двигать вправо
+   ================================ */
+
+.page-humanities .hero__image{
+  width: 100%;
+  max-width: 448px;   /* 👈 МЕНЯЕШЬ ТОЛЬКО ЭТО */
+  height: auto;
+}
+
+.page-humanities .hero__image-wrap{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 0px; /* 👈 двигай вправо */
+}
+
+/* ================================
+   СВИТОК (cta-decor2)
+   – свободно двигается
+   – свободно масштабируется
+   ================================ */
+
+.page-humanities img[src*="cta-decor2"]{
+  position: absolute;
+
+  width: 60px;   /* 👈 размер свитка */
+  height: auto;
+
+  left: 35px;    /* 👈 двигай */
+  top: 230px;     /* 👈 двигай */
+
+  z-index: 4;
+}
+
+/* ================================
+   СТРЕЛКА
+   – свободно двигается
+   – свободно масштабируется
+   ================================ */
+
+.page-humanities .hero__arrow{
+  position: absolute;
+
+  width: 140px;    /* 👈 размер стрелки */
+  height: auto;
+
+  left: 190px;    /* 👈 двигай */
+  top: 160px;     /* 👈 двигай */
+
+  transform: rotate(-25deg);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 5;
+}
+/* HUMANITIES — фиолетовый акцент вместо красного */
+.page-humanities .about-text .accent{
+  color: #A98AB0; /* фиолетовый как в макете */
+}
+
+/* ================================
+   HUMANITIES — OFFERS (как в макете)
+   ================================ */
+
+/* опора для абсолютного декора */
+.page-humanities #offers .container{
+  position: relative;
+}
+
+/* уменьшаем пустоту сверху секции */
+.page-humanities #offers{
+  padding-top: 70px;   /* было слишком много — подгони 50–90 */
+}
+
+/* Танцовщица (offers-dancer) — маленькая, справа сверху */
+.page-humanities #offers .offers-dancer{
+  position: absolute;
+  top: 18px;           /* подгони 0–30 */
+  right: 18px;         /* подгони 0–30 */
+  width: 120px;        /* подгони 90–140 */
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* на мобилке обычно убирают/уменьшают */
+@media (max-width: 768px){
+  .page-humanities #offers .offers-dancer{
+    width: 90px;
+    top: 10px;
+    right: 10px;
+  }
+}
+.page-humanities .about-line .accent{ color:#A98AB0 !important; }
+
+/* ===== HUMANITIES: OFFERS = как в макете (скрин 2) ===== */
+
+/* секция: немного меньше пустоты сверху */
+.page-humanities #offers{
+  padding-top: 40px;
+}
+
+/* контейнер — опорная точка для книги */
+.page-humanities #offers .container{
+  position: relative;
+}
+
+/* КНИГА (offers-dancer) — управляемый размер */
+.page-humanities #offers .offers-dancer{
+  position: absolute;
+  top: 0px;
+  right: 200px;
+  left: auto;
+
+  max-width: 200px;   /* 👈 МЕНЯЕШЬ ТОЛЬКО ЭТО */
+  width: 100%;
+  height: auto;
+
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ТЕКСТ СПРАВА (programs-info) — ниже, как в макете */
+.page-humanities #offers .programs-info{
+  margin-top: 38px;   /* опускаем */
+  max-width: 520px;   /* чтобы не растягивался */
+}
+
+/* чтобы сетка не разъезжалась и текст реально ушёл ниже */
+.page-humanities #offers .programs-grid__top{
+  align-items: flex-start;
+}
+/* =====================================
+   HUMANITIES — ДОСТУПНЫЕ КУРСЫ (как в Figma)
+   ===================================== */
+
+.page-humanities #courses .section__title{
+  color: #A98AB0;            /* фиолетовый как в Figma */
+  position: relative;        /* опора для картинки */
+  display: inline-block;     /* чтобы absolute считался от заголовка */
+}
+
+/* Полноценное изображение справа сверху (НЕ inline иконка) */
+.page-humanities #courses .section__title::after{
+  content: "";
+  position: absolute;
+
+  width: 115px;               /* 👈 размер картинки (подгони) */
+  height: 115px;
+
+  top: -55px;                /* 👈 выше заголовка (подгони) */
+  right: -105px;              /* 👈 справа от текста (подгони) */
+
+  background-image: url("../img/courses-icon.png"); /* 👈 твой файл из Figma */
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+/* =====================================
+   HUMANITIES — ФОРМА ОБРАТНОЙ СВЯЗИ
+   ===================================== */
+
+/* 1) ФИОЛЕТОВЫЙ ТЕКСТ «бесплатный урок» */
+.page-humanities .contact__title-accent{
+  color: #A98AB0; /* фиолетовый как в Figma */
+}
+
+/* 2) ФИОЛЕТОВАЯ КНОПКА «Отправить» */
+.page-humanities .contact-form__submit,
+.page-humanities .form button[type="submit"]{
+  background-color: #A98AB0;
+  color: #121826; /* было #fff = 3.02:1, ниже WCAG AA — тёмный текст даёт 5.87:1 */
+  border: none;
+  box-shadow: none;
+}
+
+.page-humanities .contact-form__submit:hover,
+.page-humanities .form button[type="submit"]:hover{
+  background-color: #9373a3; /* чуть темнее при ховере */
+}
+
+/* 3) ИЗОБРАЖЕНИЕ island В ФОРМЕ — УПРАВЛЯЕМОЕ */
+.page-humanities .contact-form,
+.page-humanities .form{
+  position: relative;
+}
+
+/* двигаем ТОЛЬКО картинку, у которой в src есть "island" */
+.page-humanities .contact-form img[src*="island"],
+.page-humanities .form img[src*="island"]{
+  position: absolute;
+
+  /* 👇 ЭТИ ПАРАМЕТРЫ ТЫ МЕНЯЕШЬ */
+  top: 0px;
+  right: 0px;
+  width: 350px;
+
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ==================================================
+   LANGUAGE — HERO IMAGE (TABLET ONLY)
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .page-language .hero__image {
+    max-width: 800px;   /* ← УВЕЛИЧЕНИЕ КАРТИНКИ */
+    width: 100%;
+    height: auto;
+  }
+
+}
+/* ==================================================
+   LANGUAGE — WHY UMBRELLA (TABLET ONLY)
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .page-language .why-head__umbrella{
+    left: 70px;   /* ← сдвиг левее, подгони при желании */
+  }
+}
+/* ==================================================
+   LANGUAGE — OFFERS DECOR (TABLET ONLY)
+   Танцовщица правее, чайник ниже
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Танцовщица */
+  .page-language #offers .offers-dancer{
+    right: 200px;   /* 👉 УВЕЛИЧИВАЕШЬ — уходит правее */
+  }
+
+  /* Чайник */
+  .page-language .why-teapot{
+    bottom: -90px;  /* 👉 БОЛЬШЕ минус — ниже */
+  }
+
+}
+
+/* ==================================================
+   HUMANITIES — CTA DECOR 2 (TABLET ONLY)
+   двигаем "список" левее/ниже
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  .page-humanities img[src*="cta-decor2"]{
+    position: absolute !important;
+
+    width: 60px !important;   /* размер оставил как у тебя */
+    height: auto !important;
+
+    left: -20px !important;    /* ← МЕНЬШЕ = ЛЕВЕЕ */
+    top: 320px !important;    /* ↑ БОЛЬШЕ = НИЖЕ */
+
+    z-index: 4 !important;
+    pointer-events: none !important;
+  }
+
+}
+
+
+
+
+

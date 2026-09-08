@@ -1,0 +1,2290 @@
+html {
+  scroll-behavior: smooth;
+}
+/* Цвета — единственный источник правды для "красного" бренда (раньше
+   рядом жили #e54545 и #ff5a5a как отдельные "почти такие же" красные) */
+:root {
+  --primary: #f34b4b;
+  --text-main: #2c2c2c;
+  --bg-soft: #F9FAF5;
+}
+
+/* HEADER */
+
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0e6e0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 96px;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo__img {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Горизонтальное меню на десктопе */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.nav a {
+  position: relative;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+}
+
+.nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 24px;
+}
+
+/* Кнопка "Главная" справа (десктоп) */
+.btn--main {
+  padding: 10px 24px;
+  font-size: 14px;
+  border-radius: 999px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Выпадающее меню справа (десктоп) — полное оформление и анимация
+   собраны в одном месте, см. блок "DROPDOWN (анимация + оформление)"
+   ниже по файлу; тут остаётся только базовое позиционирование. */
+.dropdown {
+  position: relative;
+}
+
+/* Бургер по умолчанию скрыт (только для мобилки) */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #d6d6d6;
+  background-color: #ffffff;
+  padding: 0;
+  margin-right: 12px;
+}
+
+/* полоски ТОЛЬКО внутри .burger__icon (чтобы не ломать burger__text) */
+.burger .burger__icon span{
+  display: block;
+  width: 16px;
+  height: 2px;
+  background-color: #111;
+  border-radius: 999px;
+}
+
+/* текст внутри бургера — обычный текст, НЕ полоска */
+.burger .burger__text{
+  width: auto;
+  height: auto;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* "Главная" для мобильного меню — по умолчанию скрыта (только моб) */
+.nav-main-group {
+  position: relative;
+  display: none;       /* важное: на десктопе не показываем */
+}
+
+.nav-main-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-main-submenu {
+  display: none;
+  margin-top: 6px;
+}
+
+.nav-main-submenu a {
+  display: block;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.nav-main-group--open .nav-main-submenu {
+  display: block;
+}
+
+/* ===== АДАПТИВ ШАПКИ ===== */
+
+@media (max-width: 768px) {
+  .header__inner {
+    height: 64px;
+  }
+
+  /* показываем бургер */
+  .burger {
+    display: flex;
+  }
+
+  /* убираем правую кнопку "Главная" на мобилке */
+  .header__right {
+    display: none;
+  }
+
+  /* перестраиваем меню в выпадающий список под шапкой */
+  .nav {
+    position: absolute;
+    top: 64px; /* высота шапки */
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px 16px;
+    border-bottom: 1px solid #f0e6e0;
+    display: none;          /* по умолчанию скрыто */
+    z-index: 25;
+  }
+
+  /* когда хедер в состоянии mobile-open — показываем меню */
+  .header--mobile-open .nav {
+    display: flex;
+  }
+
+  /* "Главная" в мобильном меню */
+  .nav-main-group {
+    display: block;    /* теперь показываем */
+    width: 100%;
+    order: -1;         /* именно это поднимает её НА САМО ВЕРХУ */
+    margin-bottom: 8px;
+  }
+
+  .nav-main-toggle {
+    padding: 8px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-main-submenu {
+    margin-top: 4px;
+    padding-left: 16px;
+  }
+
+  .nav-main-submenu a {
+    padding: 4px 0;
+  }
+}
+
+
+/* Кнопки */
+
+/* Кнопки */
+
+.btn {
+  display: inline-flex;            /* ← КЛЮЧ */
+  align-items: center;             /* ← КЛЮЧ */
+  justify-content: center;         /* ← КЛЮЧ */
+  vertical-align: middle;          /* ← чтобы не прыгала по baseline */
+
+  border-radius: 999px;
+  padding: 10px 18px;
+  min-height: 44px; /* touch-таргет WCAG (было ~33px) */
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  background-color: transparent;
+  white-space: nowrap;
+
+  text-decoration: none;           /* ← чтобы <a> не подчеркивалась */
+  cursor: pointer;                 /* ← чтобы <a> была как кнопка */
+  line-height: 1;                  /* ← чтобы высота не плясала */
+
+  transition: transform 160ms var(--ease-out), filter 160ms var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--ghost {
+  border-color: #d1d5db;
+  background-color: #ffffff;
+}
+
+.btn--small {
+  padding: 6px 12px;
+  font-size: 11px;
+}
+
+.btn--primary {
+  background-color: #ffd766;      /* жёлтая заливка */
+  color: #000000;
+  border-color: transparent;      /* было #1d9bf0 — синяя обводка не связана ни с одним цветом сайта */
+  box-shadow: 0 4px 0 #e2b640;    /* лёгкая тень вниз */
+  transition: transform 160ms var(--ease-out), filter 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    filter: brightness(0.97);
+  }
+}
+
+/* "Вдавливание" по высоте собственной тени вместо общего scale — обыгрывает pressed-button тень */
+.btn--primary:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #e2b640;
+}
+
+.btn--outline {
+  border-color: #d1d5db;
+  background-color: transparent;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 420px;
+  padding: 0;
+  background-color: var(--bg-soft);
+}
+
+/* Серая карточка */
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+  gap: 32px;
+
+  align-items: center;
+
+  background-color: #EDEDED;
+  border-radius: var(--radius-card);
+
+  /* КЛЮЧ: убираем отступы у серого блока */
+  padding: 0;
+
+  min-height: 420px;
+}
+
+/* ЛЕВАЯ КОЛОНКА — отступы остаются ТОЛЬКО тут */
+.hero__content {
+  position: relative;
+  padding: 24px 0 40px 56px;
+}
+
+/* стрелка под текстом */
+.hero__arrow {
+  position: absolute;
+  width: 140px;
+  height: auto;
+  left: 300px;
+  top: 180px;
+  opacity: 0.9;
+  pointer-events: none;
+  image-rendering: crisp-edges;
+}
+
+.hero__label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #00a6b5;
+  margin-bottom: 10px;
+}
+
+.hero__title {
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.hero__title-top {
+  font-size: 46px;
+  color: #00a6b5;
+  font-weight: 800;
+}
+
+.hero__title-main {
+  font-size: 46px;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.hero__text {
+  margin-top: 10px;
+  font-size: 15px;
+  max-width: 380px;
+}
+
+.hero__btn {
+  margin-top: 100px;
+}
+
+/* ПРАВАЯ КОЛОНКА — картинка без отступов, серый фон “до краёв” */
+.hero__image-wrap {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 0;            /* КЛЮЧ */
+  margin: 0;             /* КЛЮЧ */
+}
+
+/* КАРТИНКУ НЕ МЕНЯЕМ по размеру (как у тебя было раньше) */
+.hero__image {
+  width: 100%;
+  max-width: 320px;      /* <-- оставь своё значение (если было 320) */
+  border-radius: var(--radius-card);
+  object-fit: contain;
+}
+
+/* МОБИЛКА: картинка от хедера и до заголовка — без лишних пустот */
+@media (max-width: 768px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Картинка без верхних отступов */
+  .hero__image-wrap {
+    justify-content: center;
+  }
+
+  /* Тексту делаем отступы, чтобы был “воздух” */
+  .hero__content {
+    padding: 0 20px 24px;
+  }
+}
+
+/* ОБЩИЕ СЕКЦИИ */
+
+.section {
+  padding: 32px 0;
+  background-color: var(--bg-soft);
+}
+#about {
+  scroll-margin-top: 120px;
+}
+.section--white {
+  background-color: #ffffff;
+}
+
+.section--soft {
+  background-color: var(--bg-soft);
+}
+
+.section__title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.section__title--left {
+  text-align: left;
+}
+
+.section__title-accent {
+  color: var(--primary);
+}
+
+.section__title-accent--blue {
+  color: #6ec4d8;
+}
+/* Текстовые блоки под секцией "В ЧЕМ НАША ЦЕЛЬ?" */
+
+.about-line {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 600;
+  max-width: 580px;
+}
+
+.about-line .accent {
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}
+
+
+/* Цели */
+
+.goal-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.goal-card {
+  padding: 20px 22px;
+  border-radius: 24px;
+  font-size: 16px;
+
+  /* Лёгкая тень как в фигме */
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .goal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Заголовок внутри карточки */
+.goal-card h3 {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* НОВЫЕ ЦВЕТА карточек */
+.goal-card--peach {
+  background-color: rgba(255, 193, 67, 0.5); /* мягкий персиковый */
+}
+
+.goal-card--mint {
+  background-color: rgba(73, 154, 155, 0.5); /* мягкий мятный */
+}
+
+.goal-card--blue {
+  background-color: rgba(220, 61, 75, 0.5); /* мягкий голубой */
+}
+
+.about-text {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+  font-size: 17px;
+  line-height: 1.45;
+  margin-bottom: 34px;
+}
+
+/* =========================
+   ПРЕПОДАВАТЕЛИ (целиком)
+   ========================= */
+
+/* Карточка */
+.teacher-card {
+  text-align: center;
+}
+
+/* ФОТО + БЕЙДЖ */
+.teacher-card__photo-wrap {
+  position: relative;
+  width: 280px;          /* как в твоём дизайне */
+  height: 280px;
+  margin: 0 auto 24px;
+}
+
+.teacher-card__photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.teacher-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .teacher-card:hover .teacher-card__photo img {
+    transform: scale(1.05);
+  }
+}
+
+/* маленький кружок-бейдж */
+.teacher-card__badge {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+}
+
+.teacher-card__badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.teacher-card__name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.teacher-card__subject {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.03em;
+  font-family: var(--font-sans);
+}
+
+.teacher-card__exam {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.teacher-card__exp {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Цвета предметов — те же токены, что и на самих предметных страницах
+   (раньше тут были несвязанные хардкод-хексы, English рендерился в
+   "китайском" красном, а Chinese — в цвете, которого нет больше нигде) */
+.teacher-card__subject--english { color: rgb(var(--en-accent)); }
+.teacher-card__subject--chines  { color: rgb(var(--zh-accent)); }
+.teacher-card__subject--spanies { color: rgb(var(--es-accent)); }
+
+/* =========================
+   СЛАЙДЕР / СКРОЛЛ
+   Работает с твоей структурой:
+   .teachers-slider
+     .teachers-slider__viewport  (скроллится)
+       .teachers-slider__track   (flex ряд карточек)
+   ========================= */
+
+.teachers-slider {
+  position: relative;
+}
+
+/* viewport — именно он скроллится пальцем */
+.teachers-slider__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+
+  /* скрыть скроллбар */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.teachers-slider__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* трек — флекс-ряд */
+.teachers-slider__track {
+  display: flex;
+  gap: 26px;            /* совпадает с твоим общим gap */
+  width: max-content;   /* важно: ширина = сумме карточек */
+  padding: 6px 2px 10px;
+}
+
+/* карточки: НЕ меняем визуал, задаём только ширину для скролла */
+.teachers-slider__track .teacher-card {
+  flex: 0 0 auto;
+  width: 320px;         /* десктоп */
+}
+
+/* Стрелки */
+.teachers-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+}
+
+.teachers-arrow img {
+  width: 48px;
+  height: auto;
+  display: block;
+}
+
+.teachers-arrow--left  { left: -10px; }
+.teachers-arrow--right { right: -10px; }
+
+/* =========================
+   АДАПТИВ (Преподаватели)
+   - кружки меньше
+   - стрелки скрыты на планшете/мобилке
+   - на телефонах карточки уже + gap меньше (чтобы было понятно, что можно листать)
+   ========================= */
+
+@media (max-width: 1024px) {
+  .teachers-slider__track .teacher-card {
+    width: 280px;
+  }
+}
+
+/* планшеты и ниже: только свайп */
+@media (max-width: 900px) {
+  .teachers-arrow {
+    display: none !important;
+  }
+
+  .teachers-slider__track {
+    gap: 16px; /* чуть плотнее уже на планшетах */
+  }
+
+  .teachers-slider__track .teacher-card {
+    width: 260px; /* карточка уже, чтобы виднелась следующая */
+  }
+
+  .teacher-card__photo-wrap {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* телефоны */
+@media (max-width: 600px) {
+  .teachers-slider__track {
+    gap: 10px; /* как ты хотела */
+  }
+
+  .teachers-slider__track .teacher-card {
+    width: 240px; /* ключевое: меньше карточка → следующий кружок видно */
+  }
+
+  .teacher-card__photo-wrap {
+    width: 180px;
+    height: 180px;
+  }
+   .teacher-card__badge {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+
+/* НАШИ ПРОГРАММЫ И ФОРМАТЫ */
+
+
+/* === ПОЧЕМУ ВЫБИРАЮТ НАС === */
+
+/* Фон секции и общий отступ */
+.section--why {
+  background-color: #F9FAF5;             /* фон блока как в макете */
+  font-family: var(--font-sans);
+  padding: 60px 0;
+}
+
+/* Две строки заголовка */
+.why-title-main {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.why-title-sub {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #000;                           /* чёрный */
+  margin-bottom: 32px;
+}
+
+/* Сетка карточек внутри секции */
+.section--why .formats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 10px;
+}
+
+/* Карточка */
+.section--why .format-card {
+  padding: 22px 24px;
+  border-radius: var(--radius-card);
+  font-size: 15px;
+  line-height: 1.45;
+  border: none;
+  color: #2b2626;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08); /* лёгкая тень */
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .section--why .format-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Внутренняя плашка-заголовок (Современно, Доступно и т.п.) */
+.section--why .format-card__label {
+  display: block;                 /* было inline-block */
+  width: fit-content;             /* чтобы ширина была по тексту */
+  padding: 7px 26px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 0, 0, 0.8);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 auto 14px;            /* центрируем */
+}
+
+/* Текст в карточке */
+.section--why .format-card p {
+  margin: 0;
+}
+
+/* ЯРКИЕ цвета карточек (как в макете) */
+.section--why .format-card--soft {
+  background-color: rgba(220, 61, 75, 0.5);            /* розовый */
+}
+
+.section--why .format-card--peach {
+  background-color: rgba(255, 193, 67, 0.5);            /* жёлтый/оранжевый */
+}
+
+.section--why .format-card--mint {
+  background-color: rgba(73, 154, 155, 0.5);            /* мятный */
+}
+
+.section--why .format-card--lilac {
+  background-color: rgba(202, 138, 60, 0.5);            /* лиловый */
+}
+
+/* Адаптив */
+@media (max-width: 1024px) {
+  .section--why .formats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .section--why .formats {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==== НАШИ ПРОГРАММЫ И ФОРМАТЫ ==== */
+
+.section--programs {
+  background-color: #EDEDED;          /* тот же серый фон, что и у hero */
+  border-radius: var(--radius-card);
+  padding: 24px 56px 40px
+}
+
+/* Заголовок: "НАШИ ПРОГРАММЫ" синим, "И ФОРМАТЫ" красным */
+.programs-title-main {
+  font-family: var(--font-serif);
+  color: #0d9aa8;
+  display: block;
+}
+
+.programs-title-accent {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  display: block;
+}
+
+/* Общая сетка */
+.programs-grid {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Верхний ряд: первая карточка + текст справа */
+.programs-grid__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr); /* первая карточка ~полторы нижних */
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Нижний ряд: 3 карточки */
+.programs-grid__bottom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Карточка */
+.program-card {
+  background-color: #EFEBE6;         /* было #F1EADF — сведено к тому же "Warm Sand", что и track-card/contact-form */
+  border-radius: 24px;
+  padding: 20px 26px 26px;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .program-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 34px rgba(15, 23, 42, 0.12);
+  }
+}
+
+/* верхняя просто растягивается по высоте строки */
+.program-card--wide {
+  height: 100%;
+}
+
+/* Круглая иконка */
+.program-card__icon {
+  width: 110px;           /* ← Увеличиваешь иконки здесь (можно 90–110px) */
+  height: 110px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #E5D8C7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;        /* ← Важно: запрет сжимать контейнер */
+}
+
+.program-card__icon img {
+  width: 100%;            /* ← Управляет размером самой картинки */
+  height: 100%;
+  object-fit: contain;   /* ← Чтобы ничего не растягивалось */
+}
+
+
+/* Текст в карточке */
+.program-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.program-card__text {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* Кнопка "Записаться" */
+.program-card__btn {
+  margin-top: 18px;
+  align-self: flex-start;
+  padding: 8px 26px;
+  min-height: 44px; /* touch-таргет WCAG (было ~31px) */
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #111827;
+  background-color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+
+.program-card__btn:active {
+  transform: scale(0.97);
+}
+
+/* Текст справа */
+.programs-info {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.programs-info__accent {
+  color: #d13333; /* было var(--primary) на кремовом фоне = 3.38:1; затемнённый оттенок даёт AA */
+  font-weight: 700;
+}
+/* ---- Адаптив для блока программ ---- */
+
+/* Планшеты и меньше */
+@media (max-width: 1024px) {
+  .programs-grid__top {
+    grid-template-columns: 1fr;
+  }
+
+  /* текст уходит наверх, как в макете */
+  .programs-info {
+    order: -1;
+  }
+
+  .programs-grid__bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Телефоны */
+@media (max-width: 640px) {
+  .programs-grid__bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* === ДОСТУПНЫЕ НАПРАВЛЕНИЯ === */
+
+.section--tracks {
+  background-color: #F9FAF5;
+  font-family: var(--font-sans);
+}
+
+/* Заголовок */
+.section--tracks .section__title {
+  color: var(--primary);
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+
+/* 3 карточки в ряд */
+.tracks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Карточка 50/50, фиксированной высоты */
+.track-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;       /* 50% / 50% для всех по умолчанию */
+  background-color: #EFEBE6;
+  border-radius: var(--radius-card);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  min-width: 0;
+  height: 320px;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .track-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.1);
+  }
+}
+
+/* Специально для третьей – картинка чуть уже, тексту больше места */
+.track-card--narrow {
+  grid-template-columns: 0.4fr 0.6fr;   /* ~40% / 60% */
+}
+
+/* Левая часть — картинка */
+.track-card__image-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.track-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Правая часть — текст + стрелка */
+.track-card__content {
+  padding: 20px 22px;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* заголовок / текст / стрелка */
+  align-items: start;
+  min-width: 0;
+}
+
+.track-card__title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.track-card__text {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Стрелка-кнопка */
+.track-card__arrow {
+  justify-self: end;
+  margin-top: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #111827;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .track-card__arrow:hover {
+    transform: translateX(3px);
+  }
+}
+
+.track-card__arrow:active {
+  transform: scale(0.9);
+}
+
+.track-card__arrow img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Адаптив: планшет — 2 карточки, мобилка — 1 */
+@media (max-width: 1024px) {
+  .tracks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tracks {
+    grid-template-columns: 1fr;
+  }
+
+  .track-card,
+  .track-card--narrow {
+    grid-template-columns: 1fr;  /* картинка сверху, текст снизу */
+    height: auto;
+  }
+
+  .track-card__image-wrap {
+    height: 220px;
+  }
+}
+
+/* === КОНТАКТЫ / ФОРМА === */
+
+.section--contacts {
+  background-color: #F9FAF5; /* фон как у остальных мягких блоков */
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: flex-start;
+}
+
+/* ЛЕВАЯ КОЛОНКА */
+
+.contact__left {
+  position: relative;
+}
+
+.contact__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.2;
+  color: #121826;
+  margin-bottom: 24px;
+}
+
+.contact__title-accent {
+  color: var(--primary);
+}
+
+.contact__text {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.5;
+  color: #1f2933;
+  margin-bottom: 12px;
+}
+
+/* стрелка под текстом, указывающая на форму */
+.contact__arrow {
+  position: absolute;
+  left: 510px;   /* ТВОЁ значение, не трогаю :) */
+  top: 210px;
+  width: 120px;
+  pointer-events: none;
+}
+
+/* "Свяжитесь с нами!" */
+
+.contact__subtitle {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 80px;  /* чтобы было под стрелкой */
+  margin-bottom: 16px;
+}
+
+/* кружочки соцсетей */
+
+.contact__socials {
+  display: flex;
+  gap: 16px;
+}
+
+.contact__social {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+
+.contact__social:active {
+  transform: scale(0.93);
+}
+
+.contact__social img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* цвета кружочков */
+.contact__social--vk {
+  background-color: #3b5a98;
+}
+
+.contact__social--tg {
+  background-color: #1da1f2;
+}
+
+.contact__social--mail {
+  background-color: #f6b93b;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact__social:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+  }
+}
+
+/* ПРАВАЯ КОЛОНКА — ФОРМА */
+
+.contact-form {
+  transform: scale(0.9);
+  transform-origin: top right; /* чтобы уменьшалась в нужную сторону */
+  position: relative;              /* нужно для солдата */
+  background-color: #EFEBE6;       /* как в фигме */
+  border-radius: var(--radius-card);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  padding: 32px 36px 32px;
+  font-family: var(--font-sans);
+}
+
+/* солдатик в правом верхнем углу */
+.contact-form__guard {
+  position: absolute;
+  top: 0px;
+  right: 26px;
+  width: 60px;
+  height: auto;
+}
+ 
+
+/* заголовок формы */
+
+.contact-form__title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* поле + подпись */
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.contact-form__field span {
+  color: #374151;
+}
+
+/* ПРОЗРАЧНЫЕ ПОЛЯ + ТОЛЬКО НИЖНЯЯ ЛИНИЯ */
+
+.contact-form__field input,
+.contact-form__field textarea {
+  border: none;
+  border-bottom: 2px solid #C5C5C5;
+  border-radius: 0;
+  padding: 8px 2px 6px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  outline: none;
+  background-color: transparent;
+  min-height: 70px;
+  height: 70px;
+  resize: vertical;
+}
+
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  border-bottom-color: var(--primary);
+  box-shadow: 0 6px 8px -6px rgba(243, 75, 75, 0.35); /* фокус виден не только по цвету линии */
+}
+
+.contact-form__field textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* чекбокс */
+
+.contact-form__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 16px 0 24px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.contact-form__checkbox input {
+  margin-top: 3px;
+}
+
+/* кнопка */
+
+.contact-form__submit {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  background-color: var(--primary);
+  color: #121826; /* было #fff (3.55:1); #2c2c2c тоже не хватало (3.94:1) — 5.00:1 */
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-out), transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-form__submit:hover {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(243, 75, 75, 0.35);
+  }
+}
+
+.contact-form__submit:active {
+  transform: scale(0.98);
+}
+
+/* Адаптив */
+
+@media (max-width: 1024px) {
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* стрелку на планшетах/мобилках скрываем */
+  .contact__arrow {
+    display: none;
+  }
+
+  .contact__subtitle {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact {
+    grid-template-columns: 1fr;
+    justify-items: center;    /* грид-элементы по центру */
+  }
+
+  .contact-form {
+    transform: none;          /* ❗ отключаем scale на телефонах */
+    padding: 24px 20px;
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;           /* теперь реально центрируется */
+  }
+
+  .contact__title {
+    font-size: 30px;
+  }
+
+  .contact-form__guard {
+    width: 60px;
+    top: -10px;
+    right: 16px;
+  }
+}
+
+/* === FOOTER === */
+
+.footer {
+  background-color: #FFFFFF;
+  padding: 32px 0;
+  font-family: var(--font-sans);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* лого | навигация | правая колонка */
+  grid-template-rows: auto auto;        /* контент | нижняя строка */
+  column-gap: 48px;
+  row-gap: 18px;
+
+  align-items: start;
+  align-content: start;     /* КЛЮЧ: не растягивать строки по высоте */
+  justify-content: stretch; /* КЛЮЧ: никаких space-between */
+}
+
+/* ЛОГО */
+.footer__logo img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+/* ЛЕВЫЕ ССЫЛКИ */
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.footer__nav a {
+  font-weight: 600;
+  font-size: 18px;
+  color: #121826;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.footer__nav a:hover {
+  opacity: 0.7;
+}
+
+/* ПРАВАЯ КОЛОНКА (чтобы точно было в столбик и без разъезда) */
+.footer__right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-self: end;
+  text-align: right;
+}
+
+/* ПРАВЫЕ ССЫЛКИ */
+.footer__policy {
+  font-weight: 600;
+  font-size: 18px;
+  color: #121826;
+  text-decoration: none;
+  white-space: normal;  /* разрешаем переносы */
+}
+
+.footer__policy:hover {
+  opacity: 0.7;
+}
+
+/* НИЖНЯЯ СТРОКА */
+.footer__legal {
+  grid-column: 1 / -1;      /* на всю ширину футера */
+  font-size: 13px;
+  color: rgba(18, 24, 38, 0.55); /* полупрозрачный */
+  line-height: 1.4;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .footer__right {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .footer__nav {
+    gap: 12px;
+  }
+
+  .footer__legal {
+    text-align: left;
+  }
+}
+
+/* АДАПТИВ */
+
+
+@media (max-width: 1024px) {
+  /* СТРЕЛКУ СКРЫВАЕМ НА ВСЁМ, ЧТО МЕНЬШЕ ИЛИ РАВНО 1024px */
+  .hero__arrow {
+    display: none !important;
+     }
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__image-wrap {
+    order: -1;
+  }
+
+  .goal-cards,
+  .about-text,
+  .teachers,
+  .formats,
+  .tracks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-block {
+    grid-template-columns: 1fr;
+  }
+
+  .header__inner {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    padding: 8px 0;
+  }
+
+  .nav {
+    order: 2;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+}
+
+/* ——— 768px и меньше (телефоны + бургер) ——— */
+@media (max-width: 768px) {
+
+  /* НА МОБИЛЬНЫХ СТРЕЛКУ ПРЯЧЕМ */
+  .hero__arrow {
+    display: none !important;
+  }
+
+  .header__inner {
+    height: 64px;
+    flex-wrap: nowrap;
+  }
+
+  /* показываем бургер */
+  .burger {
+    display: flex;
+  }
+
+  /* прячем правую часть (кнопка "Главная" / таблетки на десктопе) */
+  .header__right {
+    display: none;
+  }
+
+  /* меню под шапкой, но НЕ через display none/block */
+  .nav {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0e6e0;
+    padding: 12px 16px 16px;
+    z-index: 25;
+
+    /* ВОТ ГЛАВНОЕ — анимация */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    overflow: hidden;
+    pointer-events: none;
+
+    transition:
+      max-height 260ms ease,
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  /* "Главная" только в мобильном меню — сверху */
+  .nav-main-group {
+    display: block;
+    width: 100%;
+    order: -1;
+    margin-bottom: 8px;
+  }
+
+  .nav-main-toggle {
+    padding: 8px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-main-submenu a {
+    display: block;
+    padding: 4px 0 4px 16px;
+    font-size: 14px;
+  }
+
+  /* когда шапка открыта */
+  .header--mobile-open .nav {
+    max-height: 900px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+
+/* ——— 640px и меньше (узкие телефоны) ——— */
+@media (max-width: 640px) {
+  .goal-cards,
+  .about-text,
+  .teachers,
+  .formats,
+  .tracks {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__inner {
+    gap: 24px;
+    padding: 24px 20px;
+  }
+
+  .section {
+    padding: 28px 0;
+  }
+
+  .section__title {
+    font-size: 20px;
+  }
+
+  .hero__title-top,
+  .hero__title-main {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .hero__btn {
+    margin-top: 32px;
+  }
+}
+
+/* Глобальный отступ для всех секций под фиксированную шапку */
+.section {
+  scroll-margin-top: 90px; /* подгони, если нужно: 80–110 */
+}
+
+/* Для преподавателей чуть больше, потому что сверху ещё отступы */
+#teachers {
+  scroll-margin-top: 120px;
+}
+
+/* Можно отдельно подправить другие, если будет съезжать */
+#offers,
+#courses,
+#contacts {
+  scroll-margin-top: 100px;
+}
+/* =========================
+   COOKIE BANNER (показ/скрытие + анимация)
+   ========================= */
+
+.cookie-banner{
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 999;
+  background-color: #ffffff;
+  border-radius: var(--radius-control);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  padding: 16px 18px;
+  font-family: var(--font-sans);
+
+  /* по умолчанию скрыт */
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.cookie-banner--visible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cookie-banner__content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cookie-banner__text{
+  font-size: 14px;
+  line-height: 1.4;
+  color: #1f2933;
+  margin: 0;
+}
+
+.cookie-banner__text a{
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.cookie-banner__btn{
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--primary);
+  color: #121826; /* было #fff (3.55:1); #2c2c2c тоже не хватало (3.94:1) — 5.00:1 */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cookie-banner__btn:hover{
+  filter: brightness(0.92);
+}
+
+@media (max-width: 640px){
+  .cookie-banner__content{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cookie-banner__btn{
+    width: 100%;
+  }
+}
+/* === Toast уведомление формы === */
+.form-toast{
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: #1f2937;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 9999;
+}
+
+.form-toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.form-toast.is-error{
+  background: #b91c1c;
+}
+
+
+/* =========================================
+   SMOOTH DROPDOWNS + MOBILE MENU ANIMATION + BURGER
+   ВСТАВИТЬ В КОНЕЦ main.css (и можно в inner-switch.css, но лучше main.css)
+   ========================================= */
+
+/* =========================
+   DROPDOWN (оформление + анимация — единственное место в проекте,
+   раньше эти же правила дублировались тут и в inner-switch.css
+   с чуть разными значениями)
+   ========================= */
+
+.dropdown__menu{
+  /* если где-то есть display:none — перебиваем */
+  display: block !important;
+
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 240px;
+  max-width: min(300px, calc(100vw - 32px)); /* не вылезает за край экрана */
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius-control);
+  padding: 10px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+  z-index: 3100;
+
+  transform-origin: top right; /* меню открывается справа, из-под своей кнопки */
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 180ms var(--ease-out),
+    visibility 0s linear 180ms;
+}
+
+.dropdown.dropdown--open .dropdown__menu{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 180ms var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.dropdown__menu a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  color: #111;
+  transition: background-color 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.dropdown__menu a:hover{
+  background: rgba(0,0,0,0.05);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dropdown__menu a:hover{
+    transform: translateX(3px);
+  }
+}
+
+.dropdown__menu .dropdown__group-link{
+  font-weight: 700;
+}
+
+.dropdown__menu .dropdown__group-link:not(:first-child){
+  margin-top: 6px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 14px;
+}
+
+.dropdown__menu .dropdown__sub-link{
+  padding-left: 20px;
+  font-size: 14px;
+  color: rgba(44,44,44,0.75);
+}
+
+/* цветная точка перед предметом — берёт цвет из токена этого предмета
+   (--link-accent задаётся инлайново в header.php на каждой ссылке) */
+.dropdown__menu .dropdown__sub-link::before{
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(var(--link-accent, 44 44 44));
+}
+
+/* Стрелочка ▾ — плавно разворачивается на 180° при открытом меню/аккордеоне */
+.chevron{
+  display: inline-block;
+  transition: transform 200ms var(--ease-out);
+}
+
+.dropdown--open .chevron,
+.nav-main-group--open > .nav-main-toggle .chevron,
+.nav-sub-group--open > .nav-sub-toggle .chevron{
+  transform: rotate(180deg);
+}
+
+/* =========================
+   MOBILE NAV (плавно + списком)
+   ========================= */
+
+@media (max-width: 768px){
+
+  .header .nav{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    overflow: hidden;
+    pointer-events: none;
+
+    transition:
+      max-height 260ms ease,
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  /* ссылки списком */
+  .header .nav > a{
+    display: block !important;
+    width: 100% !important;
+    white-space: normal !important;
+  }
+
+  .header.header--mobile-open .nav{
+    max-height: 900px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* =========================
+   BURGER (Главная/Закрыть + иконка справа)
+   ========================= */
+
+.burger.burger--with-text{
+  width: auto !important;
+  height: auto !important;
+  min-width: 132px !important;
+  padding: 8px 14px !important;
+
+  display: inline-flex !important;
+  flex-direction: row !important;          /* <<< ВАЖНО */
+  align-items: center !important;
+  justify-content: space-between !important;/* <<< ВАЖНО */
+  gap: 10px !important;
+
+  border-radius: 999px !important;
+  border: 1px solid rgba(0,0,0,0.18) !important;
+  background: #fff !important;
+
+  position: relative !important;
+  z-index: 4000 !important;
+}
+
+/* текст */
+.burger.burger--with-text .burger__text{
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* иконка всегда справа */
+.burger.burger--with-text .burger__icon{
+  display: inline-flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+
+  margin-left: auto !important;      /* <<< КЛЮЧ: уводим вправо */
+  position: static !important;       /* запрещаем absolute */
+}
+
+/* жёстко запрещаем старым стилям двигать спаны */
+.burger.burger--with-text span{
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+
+/* полоски */
+.burger.burger--with-text .burger__icon span{
+  display: block !important;
+  width: 18px !important;
+  height: 2px !important;
+  background: #111 !important;
+  border-radius: 2px !important;
+
+  transition: transform .25s ease, opacity .25s ease !important;
+}
+
+/* крестик */
+.burger.burger--with-text.burger--open .burger__icon span:nth-child(1){
+  transform: translateY(6px) rotate(45deg) !important;
+}
+.burger.burger--with-text.burger--open .burger__icon span:nth-child(2){
+  opacity: 0 !important;
+}
+.burger.burger--with-text.burger--open .burger__icon span:nth-child(3){
+  transform: translateY(-6px) rotate(-45deg) !important;
+}
+
+/* очень узкие экраны — убираем текст */
+@media (max-width: 360px){
+  .burger.burger--with-text{
+    min-width: auto !important;
+  }
+  .burger.burger--with-text .burger__text{
+    display: none !important;
+  }
+}
+
+/* =========================================
+   SHOW MOBILE BURGER ONLY ON MOBILE
+   ========================================= */
+
+/* по умолчанию (десктоп) — скрываем */
+.burger.burger--with-text{
+  display: none !important;
+}
+
+/* на мобилке — показываем */
+@media (max-width: 768px){
+  .burger.burger--with-text{
+    display: inline-flex !important;
+  }
+}
+
+/* ==================================================
+   TABLET ONLY (769px–1024px)
+   HEADER — ВСЁ В 1 СТРОЧКУ (без ломания мобилки/десктопа)
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  /* 1) Бургер на планшетах не нужен */
+  #burgerToggle,
+  .burger,
+  .burger.burger--with-text{
+    display: none !important;
+  }
+
+  /* 2) Хедер — одна строка */
+  .header__inner{
+    flex-wrap: nowrap !important;
+    height: 96px !important;
+    justify-content: space-between !important;
+    gap: clamp(10px, 1.6vw, 18px) !important; /* ⬆ было меньше */
+  }
+
+  /* 3) Лого — без изменений */
+  .logo__img{
+    width: clamp(120px, 15vw, 155px) !important;
+    height: auto !important;
+  }
+
+  /* 4) МЕНЮ — УВЕЛИЧИВАЕМ */
+  .nav{
+    position: static !important;
+    order: 0 !important;
+    width: auto !important;
+
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+
+    gap: clamp(18px, 2.4vw, 30px) !important; /* ⬆ БОЛЬШЕ воздуха */
+    padding: 0 !important;
+    margin: 0 clamp(10px, 1.6vw, 18px) !important;
+  }
+
+  .nav a{
+    white-space: nowrap !important;
+    font-size: clamp(12px, 1.45vw, 14px) !important; /* ⬆ КЛЮЧЕВОЕ */
+  }
+
+  /* 5) Правая "Главная ▾" — тоже чуть крупнее */
+  .header__right{
+    display: flex !important;
+    gap: clamp(8px, 1.4vw, 14px) !important;
+    margin-right: 0 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .header__right .btn--main{
+    font-size: clamp(14px, 1.8vw, 16px) !important;
+    padding: clamp(9px, 1.2vw, 12px) clamp(18px, 2.2vw, 26px) !important;
+    white-space: nowrap !important;
+  }
+
+  /* 6) Мобильная "Главная" внутри nav — не нужна */
+  .nav-main-group{
+    display: none !important;
+  }
+}
+/* ==================================================
+   TABLET ONLY (769px–1024px)
+   HERO — ТЕКСТ И КАРТИНКА РЯДОМ (как на десктопе)
+   + сдвиг текстового блока чуть левее (без изменения размеров текста)
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  /* 1) ВОЗВРАЩАЕМ "как на десктопе": два столбца в одну строку */
+  .hero__inner{
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+
+    gap: clamp(12px, 2vw, 20px) !important;
+  }
+
+  /* 2) Колонки должны сжиматься (иначе всё разъезжается) */
+  .hero__content,
+  .hero__image-wrap{
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+  }
+
+  /* 3) СДВИГ ТЕКСТА ВЛЕВО — ТУТ КРУТИШЬ
+        (это влияет на заголовок/текст/кнопку вместе) */
+  .hero__content{
+    padding-left: clamp(12px, 1.6vw, 22px) !important; /* ← было 56px в базе */
+    padding-right: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 4) Картинка "садится" в серый блок и не улетает */
+  .hero__image-wrap{
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: flex-end !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero__image{
+    width: clamp(280px, 34vw, 420px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* 5) ТЕКСТ НЕ МАСШТАБИРУЕМ — только чтобы не ломать межстрочку */
+  .hero__title{
+    line-height: 1.08 !important;
+  }
+}
+/* ==================================================
+   TABLET ONLY (769px–1024px)
+   "В ЧЕМ НАША ЦЕЛЬ?" — ТОЛЬКО РОЗОВЫЙ БЛОК ПО ЦЕНТРУ
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  /* Сетка "Цели" на планшетах = 2 колонки (как и сейчас) */
+  #about .goal-cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* ТОЛЬКО розовый блок (у тебя это goal-card--blue) — по центру строки */
+  #about .goal-card.goal-card--blue{
+    grid-column: 1 / -1;          /* занять обе колонки */
+    justify-self: center;         /* центр внутри grid */
+    width: min(520px, 100%);      /* ширина блока (можешь менять 520px) */
+  }
+}
+/* ==================================================
+   TABLET ONLY (769px–1024px)
+   #offers — "Наши программы и форматы"
+   ТОЛЬКО карточка "Занятия в мини-группах..." на всю строку
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  /* Третья карточка в нижнем ряду = "Занятия в мини-группах..." */
+  #offers .programs-grid__bottom .program-card:nth-child(3){
+    grid-column: 1 / -1;        /* растянуть на всю строку */
+    justify-self: stretch;      /* чтобы не центрировалась узко */
+    width: 100%;
+  }
+
+}
+
+/* ==================================================
+   TABLET ONLY — центрируем "Дополнительные курсы" (track-card--narrow)
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tracks .track-card--narrow {
+    grid-column: 1 / -1;                 /* даём место на всю строку */
+    justify-self: center;                /* ставим карточку по центру */
+    width: 100%;
+    max-width: calc((100% - 24px) / 2);  /* ширина как у 1 карточки (gap у тебя 24px) */
+  }
+}
+/* ==================================================
+   TABLET ONLY — "Свяжитесь с нами" снизу слева, форма справа
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* 2 колонки: слева инфо, справа форма */
+  .contact__inner{
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(380px, 520px);
+    gap: 24px;
+    align-items: end;              /* ключ: прижимаем содержимое вниз */
+  }
+
+  /* Левый блок (заголовок + иконки) — вниз */
+  .contact__inner :is(.contact__info, .contact__content, .contact__left){
+    align-self: end;
+  }
+
+  /* Форма справа */
+  .contact-form{
+    justify-self: end;
+    width: 100%;
+    max-width: 520px;              /* твоя “идеальная” ширина */
+  }
+}
+
+/* ==================================================
+   TABLET ONLY — смещаем "Свяжитесь с нами" и иконки вниз
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Левый столбец — прижать вниз относительно формы */
+  .contact__inner {
+    align-items: stretch; /* сбрасываем end */
+  }
+
+  .contact__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* КЛЮЧЕВОЕ */
+    padding-bottom: 24px;      /* визуальный отступ от низа секции */
+  }
+}
+
+/* =========================================================
+   SCROLL REVEAL — карточки появляются при попадании в вьюпорт
+   (только маркетинговые секции, срабатывает один раз).
+   Наблюдается КОНТЕЙНЕР (assets/scroll-reveal.js добавляет ему
+   .is-visible), поэтому разметку карточек трогать не пришлось —
+   работает сразу на всех страницах, где есть эти секции.
+   ========================================================= */
+
+.goal-cards > .goal-card,
+.section--why .formats > .format-card,
+.programs-grid__bottom > .program-card,
+.tracks > .track-card,
+.teachers-slider__track > .teacher-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+
+.goal-cards.is-visible > .goal-card,
+.section--why .formats.is-visible > .format-card,
+.programs-grid__bottom.is-visible > .program-card,
+.tracks.is-visible > .track-card,
+.teachers-slider__track.is-visible > .teacher-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.goal-cards > .goal-card:nth-child(2),
+.section--why .formats > .format-card:nth-child(2),
+.programs-grid__bottom > .program-card:nth-child(2),
+.tracks > .track-card:nth-child(2),
+.teachers-slider__track > .teacher-card:nth-child(2) {
+  transition-delay: 60ms;
+}
+
+.goal-cards > .goal-card:nth-child(3),
+.section--why .formats > .format-card:nth-child(3),
+.programs-grid__bottom > .program-card:nth-child(3),
+.tracks > .track-card:nth-child(3),
+.teachers-slider__track > .teacher-card:nth-child(3) {
+  transition-delay: 120ms;
+}
+
+.section--why .formats > .format-card:nth-child(4),
+.teachers-slider__track > .teacher-card:nth-child(4) {
+  transition-delay: 180ms;
+}
+
+.teachers-slider__track > .teacher-card:nth-child(n+5) {
+  transition-delay: 220ms;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

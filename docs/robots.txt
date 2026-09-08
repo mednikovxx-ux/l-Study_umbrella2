@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mednikovxx-ux.github.io/Study_umbrella2/sitemap.xml

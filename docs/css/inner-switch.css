@@ -1,0 +1,220 @@
+/* inner-switch.css */
+
+/* чтобы хедер всегда был сверху и кликабельный */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+}
+/* правая часть с двумя таблетками */
+.header__right--switch{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* маленькая 2-я таблетка */
+.btn--switch{
+  padding: 10px 18px;
+  font-size: 16px;
+}
+
+/* dropdown: оформление/анимация — см. css/main.css (единственное место,
+   раньше дублировалось тут с чуть другими значениями) */
+
+/* ==========================
+   МОБИЛКА: 2-уровневое меню
+   ========================== */
+
+/* прячем таблетки на мобиле (остается бургер + меню) */
+@media (max-width: 768px){
+  .header__right--switch{
+    display: none;
+  }
+}
+
+/* 1-й уровень (Главная) — аккордеон на grid-template-rows (0fr/1fr), а не
+   max-height: не трогает layout каждый кадр, только компоновку строки грида */
+.nav-main-submenu{
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 260ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+.nav-main-submenu__inner{
+  overflow: hidden;
+  min-height: 0;
+  padding-top: 10px;
+}
+
+.nav-main-group.nav-main-group--open .nav-main-submenu{
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+/* 2-й уровень (Языковая/Гуманитарная) */
+.nav-sub-submenu{
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  padding-left: 14px;
+  transition: grid-template-rows 220ms var(--ease-out), opacity 180ms var(--ease-out);
+}
+
+.nav-sub-submenu__inner{
+  overflow: hidden;
+  min-height: 0;
+  padding-top: 8px;
+}
+
+.nav-sub-group.nav-sub-group--open .nav-sub-submenu{
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.nav-sub-toggle{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background: transparent;
+  border: none;
+  font: inherit;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.nav-sub-submenu a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+/* та же цветная точка по предмету, что и в десктопном дропдауне */
+.nav-sub-submenu a::before{
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(var(--link-accent, 44 44 44));
+}
+
+/* ================================
+   FIX: "Главная" не кликается
+   ================================ */
+
+/* Поднимаем весь правый блок и сами кнопки выше любых оверлеев */
+.header__right--switch{
+  position: relative;
+  z-index: 9999;
+}
+
+/* Поднимаем конкретно dropdown "Главная" */
+#mainDropdown{
+  position: relative;
+  z-index: 10000;
+}
+
+/* Гарантируем, что кнопка ловит клики */
+#mainMenuToggle{
+  position: relative;
+  z-index: 10001;
+  pointer-events: auto;
+}
+
+/* На всякий случай — меню "Главная" тоже */
+#mainMenu{
+  position: absolute;
+  z-index: 10002;
+}
+/* ================================
+   FIX: невидимые перекрытия кликов
+   ================================ */
+
+/* Все декоративные изображения/оверлеи не должны ловить клики */
+img,
+.hero__arrow,
+.format-card__decor,
+.why-teapot,
+.offers-dancer{
+  pointer-events: none;
+}
+
+/* НО важные картинки (логотип) должны оставаться кликабельны */
+.logo__img{
+  pointer-events: auto;
+}
+/* "Языки" — чуть меньше шрифт */
+#switchToggle{
+  font-size: 14px;
+  padding: 9px 16px;  /* чуть компактнее */
+}
+
+/* ==================================================
+   TABLET ONLY (769–1024)
+   Только language + humanities:
+   ОСТАВЛЯЕМ ТОЛЬКО 2 ТАБЛЕТКИ (Главная + Языки)
+   и выравниваем их по ПРАВОМУ краю
+   ================================================== */
+@media (min-width: 769px) and (max-width: 1024px){
+
+  /* 1) Убираем обычное меню и бургер */
+  body.page-language .nav,
+  body.page-humanities .nav{
+    display: none !important;
+  }
+
+  body.page-language #burgerToggle,
+  body.page-humanities #burgerToggle,
+  body.page-language .burger,
+  body.page-humanities .burger{
+    display: none !important;
+  }
+
+  /* 2) Хедер оставляем в ОДНУ строку, как десктоп (перебиваем tablet из main.css) */
+  body.page-language .header__inner,
+  body.page-humanities .header__inner{
+    flex-wrap: nowrap !important;
+    height: 96px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* 3) ПРАВЫЙ блок с таблетками: показываем и прижимаем вправо */
+  body.page-language .header__right--switch,
+  body.page-humanities .header__right--switch{
+    display: flex !important;
+    align-items: center !important;
+    gap: 18px !important;
+
+    margin-left: auto !important;   /* прижать вправо */
+    margin-right: 24px !important;  /* отступ от правого края */
+    width: auto !important;
+
+    flex-wrap: nowrap !important;
+  }
+
+  /* 4) ЯВНО показываем ОБЕ таблетки (на случай старых display:none) */
+  body.page-language #mainDropdown,
+  body.page-humanities #mainDropdown,
+  body.page-language #switchDropdown,
+  body.page-humanities #switchDropdown{
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  body.page-language #mainMenuToggle,
+  body.page-humanities #mainMenuToggle,
+  body.page-language #switchToggle,
+  body.page-humanities #switchToggle{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+

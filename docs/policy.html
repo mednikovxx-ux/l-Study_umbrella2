@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Шрифты: preconnect + прямая ссылка вместо @import в CSS (быстрее строится CSSOM) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
+
+<title>Политика конфиденциальности — Study Umbrella</title>
+<meta name="description" content="Политика обработки персональных данных онлайн-школы Study Umbrella." />
+<link rel="canonical" href="https://mednikovxx-ux.github.io/Study_umbrella2/policy.html" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Политика конфиденциальности — Study Umbrella" />
+<meta property="og:description" content="Политика обработки персональных данных онлайн-школы Study Umbrella." />
+<meta property="og:url" content="https://mednikovxx-ux.github.io/Study_umbrella2/policy.html" />
+<meta property="og:image" content="https://mednikovxx-ux.github.io/Study_umbrella2/img/hero-main.webp" />
+<meta property="og:locale" content="ru_RU" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Политика конфиденциальности — Study Umbrella" />
+<meta name="twitter:description" content="Политика обработки персональных данных онлайн-школы Study Umbrella." />
+
+<!-- Favicon -->
+<link rel="icon" href="img/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/globals.css" />
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/legal.css">
+
+<!-- Structured data (SEO) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Study Umbrella","url":"https://mednikovxx-ux.github.io/Study_umbrella2/index.html","logo":"https://mednikovxx-ux.github.io/Study_umbrella2/img/logo.png","description":"Онлайн-школа языковых и гуманитарных курсов с индивидуальным подходом.","sameAs":["https://vk.com/study_umbrella","https://t.me/study_umbrella_online"]}</script>
+</head>
+
+<body>
+
+<header class="header" id="siteHeader">
+  <div class="container header__inner">
+
+    <!-- ЛОГОТИП -->
+    <a href="index.html" class="logo">
+      <img src="img/logo.png" class="logo__img" alt="Логотип" loading="lazy">
+    </a>
+
+    <!-- МЕНЮ -->
+    <nav class="nav">
+      <a href="#about">О нас</a>
+      <a href="#teachers">Наши преподаватели</a>
+      <a href="#offers">Наши предложения</a>
+      <a href="#courses">Наши курсы</a>
+      <a href="#contacts">Контакты</a>
+
+      <!-- МОБИЛКА: ГЛАВНАЯ -> 2 уровня -->
+      <div class="nav-main-group">
+        <button class="nav-main-toggle" type="button">Главная <span class="chevron">▾</span></button>
+
+        <div class="nav-main-submenu"><div class="nav-main-submenu__inner">
+
+          <!-- 2-Й УРОВЕНЬ: ЯЗЫКОВАЯ ШКОЛА -->
+          <div class="nav-sub-group">
+            <button class="nav-sub-toggle" type="button">Языковая школа <span class="chevron">▾</span></button>
+            <div class="nav-sub-submenu"><div class="nav-sub-submenu__inner">
+              <a href="language-school-en.html" style="--link-accent: var(--en-accent)">English</a>
+              <a href="language-school-es.html" style="--link-accent: var(--es-accent)">Español</a>
+              <a href="language-school-zh.html" style="--link-accent: var(--zh-accent)">中文</a>
+            </div></div>
+          </div>
+
+          <!-- 2-Й УРОВЕНЬ: ГУМАНИТАРНАЯ ШКОЛА -->
+          <div class="nav-sub-group">
+            <button class="nav-sub-toggle" type="button">Гуманитарная школа <span class="chevron">▾</span></button>
+            <div class="nav-sub-submenu"><div class="nav-sub-submenu__inner">
+              <a href="humanities-history.html" style="--link-accent: var(--hist-accent)">История</a>
+              <a href="humanities-social.html" style="--link-accent: var(--soc-accent)">Обществознание</a>
+              <a href="humanities-russian.html" style="--link-accent: var(--rus-accent)">Русский язык</a>
+            </div></div>
+          </div>
+
+        </div></div>
+      </div>
+    </nav>
+
+    <!-- ПРАВАЯ ЧАСТЬ (ДЕСКТОП) -->
+    <div class="header__right">
+
+      <!-- Главная -->
+      <div class="dropdown" id="mainDropdown">
+        <button class="btn btn--ghost btn--main dropdown__toggle" id="mainMenuToggle" type="button">
+          Главная <span class="chevron">▾</span>
+        </button>
+        <div class="dropdown__menu" id="mainMenu">
+          <a href="language-school.html" class="dropdown__group-link">Языковая школа</a>
+          <a href="language-school-en.html" class="dropdown__sub-link" style="--link-accent: var(--en-accent)">English</a>
+          <a href="language-school-es.html" class="dropdown__sub-link" style="--link-accent: var(--es-accent)">Español</a>
+          <a href="language-school-zh.html" class="dropdown__sub-link" style="--link-accent: var(--zh-accent)">中文</a>
+
+          <a href="humanities-school.html" class="dropdown__group-link">Гуманитарная школа</a>
+          <a href="humanities-history.html" class="dropdown__sub-link" style="--link-accent: var(--hist-accent)">История</a>
+          <a href="humanities-social.html" class="dropdown__sub-link" style="--link-accent: var(--soc-accent)">Обществознание</a>
+          <a href="humanities-russian.html" class="dropdown__sub-link" style="--link-accent: var(--rus-accent)">Русский язык</a>
+        </div>
+      </div>
+
+      
+      
+    </div>
+
+    <!-- БУРГЕР ДЛЯ МОБИЛЬНОЙ ВЕРСИИ -->
+    <button class="burger burger--with-text" id="burgerToggle" type="button" aria-label="Открыть меню">
+      <span class="burger__text">Главная</span>
+      <span class="burger__icon" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+
+  </div>
+</header>
+
+<section class="section legal">
+  <div class="container">
+    <h1 class="legal__title">Политика конфиденциальности</h1>
+    <p class="legal__updated">Дата публикации: 23.08.2026</p>
+
+    <div class="legal__body">
+
+      <h2>1. Общие положения</h2>
+      <p>
+        Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки
+        персональных данных пользователей сайта Study Umbrella (далее — «Оператор», «мы»),
+        расположенного по адресу studyumbrella.ru (домен уточняется при переносе на хостинг).
+        Используя сайт и отправляя данные через форму обратной связи, пользователь соглашается
+        с условиями настоящей Политики.
+      </p>
+      <p>
+        Оператор: Study Umbrella. Контактный e-mail: <a href="mailto:umbrella.study.sc@gmail.com">umbrella.study.sc@gmail.com</a>.
+        <em>Реквизиты юридического лица/ИП уточняются и будут добавлены по мере регистрации бизнеса.</em>
+      </p>
+
+      <h2>2. Термины</h2>
+      <p>
+        <strong>Персональные данные</strong> — любая информация, относящаяся к прямо или косвенно
+        определённому физическому лицу (субъекту персональных данных).
+        <strong>Обработка персональных данных</strong> — любое действие с персональными данными:
+        сбор, запись, хранение, использование, передача, удаление.
+      </p>
+
+      <h2>3. Состав обрабатываемых персональных данных</h2>
+      <p>При заполнении формы обратной связи на сайте мы получаем:</p>
+      <ul>
+        <li>имя;</li>
+        <li>номер телефона;</li>
+        <li>дополнительный комментарий / ссылку на социальную сеть (по желанию пользователя);</li>
+        <li>техническую информацию о странице обращения (URL).</li>
+      </ul>
+
+      <h2>4. Цели обработки персональных данных</h2>
+      <ul>
+        <li>связь с пользователем для записи на пробный урок или консультацию;</li>
+        <li>ответы на вопросы, поступившие через форму обратной связи;</li>
+        <li>информирование о курсах и предложениях школы (при отсутствии возражений пользователя).</li>
+      </ul>
+
+      <h2>5. Правовые основания обработки</h2>
+      <p>
+        Обработка осуществляется на основании согласия субъекта персональных данных, предоставляемого
+        при отправке формы обратной связи (отметка «Соглашаюсь с политикой конфиденциальности…»),
+        в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных».
+      </p>
+
+      <h2>6. Передача данных третьим лицам</h2>
+      <p>
+        Для приёма заявок с формы обратной связи используется сервис Google Apps Script
+        (инфраструктура Google). Персональные данные передаются туда исключительно для доставки
+        заявки Оператору и не используются Google в иных целях со стороны Оператора.
+        Иным третьим лицам данные не передаются, за исключением случаев, предусмотренных
+        законодательством РФ.
+      </p>
+
+      <h2>7. Права субъекта персональных данных</h2>
+      <p>Пользователь вправе:</p>
+      <ul>
+        <li>запросить информацию об обработке своих персональных данных;</li>
+        <li>потребовать уточнения, блокирования или уничтожения данных;</li>
+        <li>отозвать согласие на обработку, направив запрос на e-mail Оператора.</li>
+      </ul>
+
+      <h2>8. Меры по защите персональных данных</h2>
+      <p>
+        Оператор принимает необходимые организационные и технические меры для защиты персональных
+        данных от неправомерного доступа, изменения, раскрытия или уничтожения.
+      </p>
+
+      <h2>9. Срок обработки и хранения</h2>
+      <p>
+        Персональные данные хранятся не дольше, чем это необходимо для целей их обработки, либо до
+        момента отзыва согласия пользователем.
+      </p>
+
+      <h2>10. Заключительные положения</h2>
+      <p>
+        Оператор вправе вносить изменения в настоящую Политику. Актуальная версия всегда доступна
+        по этому адресу. По всем вопросам, связанным с обработкой персональных данных, обращайтесь
+        на <a href="mailto:umbrella.study.sc@gmail.com">umbrella.study.sc@gmail.com</a>.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+
+    <!-- ЛОГО -->
+    <a href="index.html" class="footer__logo">
+      <img src="img/logo.png" alt="Study Umbrella" loading="lazy">
+    </a>
+
+    <!-- ЛЕВЫЕ ССЫЛКИ -->
+    <nav class="footer__nav">
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#courses">Начать заниматься</a>
+    </nav>
+
+    <!-- ПРАВЫЕ ССЫЛКИ (СТОЛБИК СПРАВА) -->
+    <div class="footer__right">
+      <a href="policy.html" class="footer__policy" target="_blank">Политика конфиденциальности</a>
+      <a href="offer.html" class="footer__policy" target="_blank">Договор оферты</a>
+      <a href="consent.html" class="footer__policy" target="_blank">Согласие на обработку персональных данных</a>
+    </div>
+
+    <!-- НИЖНЯЯ СТРОКА -->
+    <div class="footer__legal">
+      © 2026 Study Umbrella. Все права защищены.
+    </div>
+
+  </div>
+</footer>
+
+<!-- COOKIE CONSENT -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner__content">
+    <p class="cookie-banner__text">
+      Мы используем файлы cookies для корректной работы сайта и улучшения пользовательского опыта.
+      Продолжая пользоваться сайтом, вы соглашаетесь с их использованием.
+      <a href="policy.html" target="_blank">Подробнее</a>
+    </p>
+    <button class="cookie-banner__btn" id="cookieAccept">
+      Принять
+    </button>
+  </div>
+</div>
+
+<script src="assets/scroll-reveal.js"></script>
+
+<script src="assets/nav.js"></script>
+<script src="assets/cookie-consent.js"></script>
+
+</body>
+</html>
